@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
+import 'package:met_art/models/department.dart';
 import 'package:met_art/models/item_model.dart';
 import 'dart:convert';
 
-
-
 class PiecesApiProvider {
-
   http.Client client = http.Client();
   final _baseUrl = "https://collectionapi.metmuseum.org/public/collection/v1";
 
@@ -19,8 +17,21 @@ class PiecesApiProvider {
       return Result.fromJson(json.decode(response.body));
     } else {
       print("Status code : ${response.statusCode}");
-       throw Exception('Failed to load pieces list');
-    } 
+      throw Exception('Failed to load pieces list');
+    }
+  }
+
+  Future<DepartmentModel> fetchDepartmentList() async {
+    final response = await client.get("$_baseUrl/departments");
+    print(response.body.toString());
+    print("enter here");
+    if (response.statusCode == 200) {
+      print("Inside 200 status code");
+      return DepartmentModel.fromJson(json.decode(response.body));
+    } else {
+      print("Status code : ${response.statusCode}");
+      throw Exception('Failed to load pieces list');
+    }
   }
 
   /*Future<MovieDetail> fetchMovieDetail(int movieId) async {

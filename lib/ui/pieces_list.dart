@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:met_art/models/department.dart';
 //import 'package:met_art/blocs/movie_detail_bloc_provider.dart';
 //import 'package:met_art/ui/movie_detail.dart';
 import '../blocs/pieces_bloc.dart';
 import 'package:met_art/models/item_model.dart';
+import 'package:met_art/ui/department/widgets/department_card.dart';
 
 class PiecesList extends StatefulWidget {
   @override
@@ -15,7 +17,8 @@ class PiecesListState extends State<PiecesList> {
   @override
   void initState() {
     super.initState();
-    bloc.fetchAllPieces();
+    //bloc.fetchAllPieces();
+    bloc.fetchAllDepartments();
   }
 
   @override
@@ -31,10 +34,10 @@ class PiecesListState extends State<PiecesList> {
         title: Text('Pieces of Art'),
       ),
       body: StreamBuilder(
-        stream: bloc.allPieces,
+        stream: bloc.allDepartments,
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            return buildList(snapshot);
+            return buildList(snapshot);//buildList(snapshot);
           } else if (snapshot.hasError) {
             print("Inside hasError");
             return Text(snapshot.error.toString());
@@ -45,34 +48,18 @@ class PiecesListState extends State<PiecesList> {
         }),
       ),
     );
-  }
+  } 
 
-  Widget buildList(AsyncSnapshot<Result> snapshot) {
+  Widget buildList(AsyncSnapshot<DepartmentModel> snapshot) {
     return GridView.builder(
-      itemCount: 1,
+      itemCount: snapshot.data.results.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10
       ),
       itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0)
-          ),
-          child: InkResponse(
-            splashColor: Colors.red,
-            enableFeedback: true,
-            child: Image.network(
-              //snapshot.data.results[index].primaryImage,
-              snapshot.data.primaryImage,
-              fit: BoxFit.cover,
-            ),
-            onTap: () => {
-              print("On tap yeiii")
-            }//goToMoviesDetailPage(snapshot.data, index),
-          ),
-        );
+        return DepartmentCard(snapshot.data.departments[index]);
       },
     );
   }
