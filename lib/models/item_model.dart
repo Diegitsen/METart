@@ -1,4 +1,4 @@
-class ItemModel {
+/*class ItemModel {
   int _page;
   int _total_results;
   int _total_pages;
@@ -23,9 +23,9 @@ class ItemModel {
   int get total_results => _total_results;
 
   int get page => _page;
-}
+}*/
 
-class _Result {
+class Result {
   int _id;
   String _title;
   String _author;
@@ -35,7 +35,24 @@ class _Result {
   String _period;
   String _primaryImage;
 
-  _Result(result) {
+  Result.fromJson(Map<String, dynamic> parsedJson) {
+    _id = parsedJson['objectID'];
+    _title = parsedJson['title'];
+    _author = parsedJson['artistDisplayName'];
+    _date = parsedJson['artistDisplayBio'];
+    _department = parsedJson['department'];
+    _culture = parsedJson['culture'];
+    _period = parsedJson['period'];
+    _primaryImage = parsedJson['primaryImage'];
+    /*List<_Result> temp = [];
+    for (int i = 0; i < parsedJson['results'].length; i++) {
+      _Result result = _Result(parsedJson['results'][i]);
+      temp.add(result);
+    }
+    _results = temp;*/
+  }
+
+  /*Result(result) {
     _id = result['objectID'];
     _title = result['title'];
     _author = result['artistDisplayName'];
@@ -44,7 +61,7 @@ class _Result {
     _culture = result['culture'];
     _period = result['period'];
     _primaryImage = result['primaryImage'];
-  }
+  }*/
 
   int get id => _id;
 

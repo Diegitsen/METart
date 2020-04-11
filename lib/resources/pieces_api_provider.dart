@@ -11,12 +11,12 @@ class PiecesApiProvider {
   http.Client client = http.Client();
   final _baseUrl = "https://collectionapi.metmuseum.org/public/collection/v1";
 
-  Future<ItemModel> fetchPiecesList() async {
+  Future<Result> fetchPiecesList() async {
     final response = await client.get("$_baseUrl/objects/1010");
     print(response.body.toString());
     if (response.statusCode == 200) {
       print("Inside 200 status code");
-      return ItemModel.fromJson(json.decode(response.body));
+      return Result.fromJson(json.decode(response.body));
     } else {
       print("Status code : ${response.statusCode}");
        throw Exception('Failed to load pieces list');

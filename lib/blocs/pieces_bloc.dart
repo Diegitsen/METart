@@ -5,12 +5,12 @@ import 'package:met_art/resources/repository.dart';
 class PiecesBloc {
 
   final _repository = Repository();
-  final _piecesFetcher = PublishSubject<ItemModel>();
+  final _piecesFetcher = PublishSubject<Result>();
 
-  Stream<ItemModel> get allPieces => _piecesFetcher.stream;
+  Stream<Result> get allPieces => _piecesFetcher.stream;
 
   fetchAllPieces() async {
-    ItemModel itemModel = await _repository.fetchPiecesList();
+    Result itemModel = await _repository.fetchPiecesList();
     _piecesFetcher.sink.add(itemModel); 
   }
 

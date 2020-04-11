@@ -47,9 +47,9 @@ class PiecesListState extends State<PiecesList> {
     );
   }
 
-  Widget buildList(AsyncSnapshot<ItemModel> snapshot) {
+  Widget buildList(AsyncSnapshot<Result> snapshot) {
     return GridView.builder(
-      itemCount: snapshot.data.results.length,
+      itemCount: 1,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
@@ -64,7 +64,8 @@ class PiecesListState extends State<PiecesList> {
             splashColor: Colors.red,
             enableFeedback: true,
             child: Image.network(
-              snapshot.data.results[index].primaryImage,
+              //snapshot.data.results[index].primaryImage,
+              snapshot.data.primaryImage,
               fit: BoxFit.cover,
             ),
             onTap: () => {

@@ -9,7 +9,7 @@ class Repository {
   final PiecesApiProvider _movieApiProvider = PiecesApiProvider();
 
   
-  Future<ItemModel> fetchPiecesList() => _movieApiProvider.fetchPiecesList();
+  Future<Result> fetchPiecesList() => _movieApiProvider.fetchPiecesList();
 
   //Future<ItemModel> fetchSimilarMovies(int movieId) => _movieApiProvider.fetchSimilarMovies(movieId);
 
