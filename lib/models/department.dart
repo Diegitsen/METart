@@ -14,8 +14,6 @@ class DepartmentModel {
 
 }
 
-
-
 class Department {
   int _id;
   String _name;

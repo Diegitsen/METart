@@ -1,33 +1,69 @@
-import 'package:met_art/models/department.dart';
-import 'package:met_art/models/item_model.dart';
+import 'dart:async';
+import 'package:met_art/models/object_list.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:met_art/resources/repository.dart';
 
-class PiecesBloc {
+
+class PiecesListBloc {
+
   final _repository = Repository();
-  final _piecesFetcher = PublishSubject<Result>();
-  final _departmentsFetcher = PublishSubject<DepartmentModel>();
+  final _departmentId = PublishSubject<int>();
+  final _piecesList = BehaviorSubject<Future<ObjectList>>();
 
-  Stream<Result> get allPieces => _piecesFetcher.stream;
-  Stream<DepartmentModel> get allDepartments => _departmentsFetcher.stream;
+  Function(int) get fetchMovieDetailById => _departmentId.sink.add;
+  Stream<Future<ObjectList>> get piecesList => _piecesList.stream;
 
-  /*fetchAllPieces() async {
-    Result itemModel = await _repository.fetchPiecesList();
-    _piecesFetcher.sink.add(itemModel);
-  }*/
 
-  fetchAllDepartments() async {
-    DepartmentModel departmentModel = await _repository.fetchDepartmentsList();
-    _departmentsFetcher.sink.add(departmentModel);
+
+
+  PiecesListBloc() {
+    _departmentId.stream.transform(_piecesListTransformer()).pipe(_piecesList);
   }
 
-  dispose() {
-    //_piecesFetcher?.close();
-    _departmentsFetcher?.close();
+  dispose() async {
+    _departmentId?.close();
+    _piecesList?.close();
   }
+
+
+  _piecesListTransformer() {
+    return ScanStreamTransformer(
+      (Future<ObjectList> piecesList, int id, int index) {
+        print("DEP ID : $id");
+        piecesList =_repository.fetchPiecesList(id);
+        return piecesList;
+      },
+    );
+  }
+
 }
 
-final bloc = PiecesBloc();
+/*class PiecesBloc {
+  final _repository = Repository();
+  final _departmentId = PublishSubject<int>();
+  final _piecesList = BehaviorSubject<Future<int>>();
+
+  Function(int) get fetchPiecesById => _departmentId.sink.add;
+  Observable<Future<int>> get piecesList => _piecesList.stream;
+
+  PiecesBloc() {
+    _departmentId.stream.transform(_movieDetailTransformer()).pipe(_piecesList);
+  }
+
+  dispose() async {
+    _departmentId?.close();
+    _piecesList?.close();
+  }
 
 
-  
+
+  _piecesListTransformer() {
+    return ScanStreamTransformer(
+      (Future<int> piecesList) {
+        print("MOVIE ID : $piecesList");
+        piecesList = _repository.fetchPiecesList(piecesList);
+        return piecesList;
+      },
+    );
+  }
+}*/

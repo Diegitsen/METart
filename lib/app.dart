@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:met_art/ui/pieces_list.dart';
+import 'package:met_art/ui/departments_list.dart';
 
 class App extends StatelessWidget {
   @override
@@ -8,7 +8,7 @@ class App extends StatelessWidget {
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: PiecesList(),
+        body: DepartmentsList(),
       ),
     );
   }

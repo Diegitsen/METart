@@ -48,7 +48,7 @@ class DepartmentCard extends StatelessWidget {
           "assets/images/pokeball.png", //CHECK THIS OUT
           width: itemHeight * 1.388,
           height: itemHeight * 1.388,
-          color: Colors.white.withOpacity(0.14),
+          color: Colors.green,
         ),
       ),
     ];
@@ -86,7 +86,7 @@ class DepartmentCard extends StatelessWidget {
             MaterialButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               padding: EdgeInsets.all(0),
-              color: Color.fromARGB(23, 23, 34, 54),
+              color: Colors.deepPurple,
               splashColor: Colors.white10,
               highlightColor: Colors.white10,
               elevation: 0,
